@@ -1,0 +1,21 @@
+server:
+  port: 8085
+  error:
+    include-message: always
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+services:
+  cart-url: ${CART_SERVICE_URL}
+  product-url: ${PRODUCT_SERVICE_URL}
+  credit-url: ${CREDIT_SERVICE_URL}
+  payment-url: ${PAYMENT_SERVICE_URL}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

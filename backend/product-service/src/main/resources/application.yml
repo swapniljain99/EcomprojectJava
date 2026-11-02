@@ -1,0 +1,16 @@
+server:
+  port: 8081
+  error:
+    include-message: always
+spring:
+  application:
+    name: product-service
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

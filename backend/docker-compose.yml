@@ -1,0 +1,63 @@
+x-service-env: &service-env
+  env_file: .env
+
+services:
+  product-service:
+    <<: *service-env
+    build:
+      context: .
+      args:
+        SERVICE: product-service
+    ports:
+      - "127.0.0.1:8081:8081"
+    restart: unless-stopped
+
+  cart-service:
+    <<: *service-env
+    build:
+      context: .
+      args:
+        SERVICE: cart-service
+    ports:
+      - "127.0.0.1:8082:8082"
+    restart: unless-stopped
+
+  credit-service:
+    <<: *service-env
+    build:
+      context: .
+      args:
+        SERVICE: credit-service
+    ports:
+      - "127.0.0.1:8083:8083"
+    restart: unless-stopped
+
+  payment-service:
+    <<: *service-env
+    build:
+      context: .
+      args:
+        SERVICE: payment-service
+    ports:
+      - "127.0.0.1:8084:8084"
+    restart: unless-stopped
+
+  order-service:
+    <<: *service-env
+    build:
+      context: .
+      args:
+        SERVICE: order-service
+    environment:
+      CART_SERVICE_URL: http://cart-service:8082
+      PRODUCT_SERVICE_URL: http://product-service:8081
+      CREDIT_SERVICE_URL: http://credit-service:8083
+      PAYMENT_SERVICE_URL: http://payment-service:8084
+    ports:
+      - "127.0.0.1:8085:8085"
+    depends_on:
+      - cart-service
+      - product-service
+      - credit-service
+      - payment-service
+    restart: unless-stopped

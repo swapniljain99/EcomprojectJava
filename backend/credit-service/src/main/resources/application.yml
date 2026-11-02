@@ -1,0 +1,16 @@
+server:
+  port: 8083
+  error:
+    include-message: always
+spring:
+  application:
+    name: credit-service
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
