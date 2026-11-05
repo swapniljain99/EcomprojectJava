@@ -46,11 +46,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/harbor-${{ matrix.service }}
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/ecom
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=ref,event=tag
-            type=sha,prefix=sha-
+            type=raw,value=${{ matrix.service }}-latest,enable={{is_default_branch}}
+            type=ref,event=tag,prefix=${{ matrix.service }}-
+            type=sha,prefix=${{ matrix.service }}-sha-
 
       - name: Build and publish image
         uses: docker/build-push-action@v6
