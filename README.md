@@ -23,6 +23,28 @@ A multi-service ecommerce app. Java services run as Docker containers on an Azur
 
 Health checks: `http://<vm>/api/products` should return the product list.
 
+## Publishing backend Docker images
+
+The GitHub Actions workflow in `.github/workflows/docker-publish.yml` builds one
+image for each backend service using `backend/Dockerfile`. Add these repository
+secrets under **Settings → Secrets and variables → Actions** before publishing:
+
+- `DOCKERHUB_USERNAME`: your Docker Hub username.
+- `DOCKERHUB_TOKEN`: a Docker Hub access token with permission to push images.
+
+Pushes to `main`, version tags matching `v*`, and manually started workflows
+publish images to Docker Hub. The `main` branch publishes the `latest` tag;
+version tags are published as their matching tag, and every publish also gets
+a `sha-<commit>` tag. Pull requests targeting `main` build the images without
+publishing them.
+
+The image names are `harbor-product-service`, `harbor-cart-service`,
+`harbor-credit-service`, `harbor-payment-service`, and `harbor-order-service`
+under your Docker Hub username. Create these repositories in Docker Hub first,
+or ensure the account can create repositories when pushing. The storefront is
+not included because it is currently built and served as static files rather
+than as a Docker container.
+
 ## Known limits
 
 - There is no sign-in yet; the storefront uses a single demo customer.
